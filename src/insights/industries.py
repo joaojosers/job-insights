@@ -1,6 +1,7 @@
 from src.insights.jobs import ProcessJobs
 from typing import List
 
+
 class ProcessIndustries(ProcessJobs):
     def __init__(self):
         super().__init__()
@@ -9,9 +10,8 @@ class ProcessIndustries(ProcessJobs):
         unique_industries = set()
 
         for job in self.jobs_list:
-            industry = job.get('industry', '')
+            industry = job.get("industry", "")
             if industry:
                 unique_industries.add(industry)
 
         return list(unique_industries)
-
