@@ -4,19 +4,19 @@ import csv
 
 class ProcessJobs:
     def __init__(self) -> None:
-        self.job_list = list()
+        self.jobs_list = list()
 
     def read(self, path):
         with open(path, "r", newline="") as file:
             csv_reader = csv.DictReader(file)
-            self.job_list = [dict(row) for row in csv_reader]
+            self.jobs_list = [dict(row) for row in csv_reader]
 
-        return self.job_list
+        return self.jobs_list
 
     def get_unique_job_types(self) -> List[str]:
         unique_job_types = set()
 
-        for job in self.job_list:
+        for job in self.jobs_list:
             job_type = job.get("job_type", "")
 
             if job_type:
