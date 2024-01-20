@@ -18,7 +18,7 @@ class ProcessSalaries(ProcessJobs):
         return max_salary
 
     def get_min_salary(self) -> int:
-        # Inicializa com um valor grande para garantir que qualquer salário seja menor
+
         min_salary = float("inf")
 
         for job in self.jobs_list:
@@ -27,14 +27,10 @@ class ProcessSalaries(ProcessJobs):
                 salary = int(salary_range)
                 min_salary = min(min_salary, salary)
 
-        # Retorna 0 se não houver salários válidos
         return min_salary if min_salary != float("inf") else 0
 
-    # def matches_salary_range(self, job: Dict, salary: Union[int, str]) -> bool:
-    #     pass
-
     def matches_salary_range(self, job: Dict, salary: str) -> bool:
-        # Verifica se as chaves min_salary e max_salary estão presentes no dicionário
+
         if (
             "min_salary" not in job
             or job["min_salary"] is None
@@ -42,7 +38,7 @@ class ProcessSalaries(ProcessJobs):
             or job["max_salary"] is None
         ):
             raise ValueError(
-                "As chaves min_salary e max_salary são obrigatórias no dicionário."
+                "As chaves min_salary e max_salary são obrigatórias."
             )
 
         # Converte os valores de min_salary e max_salary para números
@@ -52,7 +48,7 @@ class ProcessSalaries(ProcessJobs):
             max_salary = float(job["max_salary"])
         except ValueError:
             raise ValueError(
-                "As chaves min_salary e max_salary devem ter valores numéricos."
+                "chaves min_salary e max_salary devem ter valores numéricos."
             )
         except TypeError:
             raise ValueError
@@ -70,7 +66,6 @@ class ProcessSalaries(ProcessJobs):
         except ValueError:
             raise ValueError("O parâmetro salary deve ter valor numérico.")
 
-        # Retorna True se o salário estiver dentro da faixa salarial, caso contrário, retorna False
         return min_salary <= salary <= max_salary
 
     def filter_by_salary_range(
