@@ -29,6 +29,12 @@ class ProcessSalaries(ProcessJobs):
 
         return min_salary if min_salary != float("inf") else 0
 
+    def validate_salary(salary: Union[str, int]) -> float:
+        try:
+            return float(salary)
+        except (ValueError, TypeError):
+            raise ValueError("salary deve ser do tipo float")
+        
     def matches_salary_range(self, job: Dict, salary: Union[str, int]) -> bool:
 
         for key in ["min_salary", "max_salary"]:
@@ -38,13 +44,8 @@ class ProcessSalaries(ProcessJobs):
                 raise ValueError(
                     f"chave {key} obrigatória com valor numérico."
                 )
-            #  tratar salary
             try:
-                salary == float(salary)
-            except (ValueError, TypeError):
-                raise ValueError("salary tipo float")
-
-            try:
+                salary = self.validate_salary(salary)
                 min_salary, max_salary, salary = map(
                     float,
                     (
@@ -54,12 +55,44 @@ class ProcessSalaries(ProcessJobs):
                     ),
                 )
             except (ValueError, TypeError):
-                raise ValueError("")
+                raise ValueError
         # Verifica se min_salary é maior que max_salary
         if min_salary > max_salary:
-            raise ValueError("min_salary não maior que max_salary")
+            raise ValueError("Erro ao validar salary/conversão float")
 
         return min_salary <= salary <= max_salary
+
+    # def matches_salary_range(self, job: Dict, salary: Union[str, int]) -> bool:
+
+    #     for key in ["min_salary", "max_salary"]:
+    #         if key not in job or (
+    #             not str(job[key]).replace(".", "").isdigit()
+    #         ):
+    #             raise ValueError(
+    #                 f"chave {key} obrigatória com valor numérico."
+    #             )
+    #         #  tratar salary
+    #         try:
+    #             salary == float(salary)
+    #         except (ValueError, TypeError):
+    #             raise ValueError("salary tipo float")
+
+    #         try:
+    #             min_salary, max_salary, salary = map(
+    #                 float,
+    #                 (
+    #                     job.get("min_salary", 0),
+    #                     job.get("max_salary", float("inf")),
+    #                     salary or 0,
+    #                 ),
+    #             )
+    #         except (ValueError, TypeError):
+    #             raise ValueError
+    #     # Verifica se min_salary é maior que max_salary
+    #     if min_salary > max_salary:
+    #         raise ValueError("min_salary não maior que max_salary")
+
+    #     return min_salary <= salary <= max_salary
 
     def filter_by_salary_range(
         self, jobs: List[dict], salary: Union[str, int]
