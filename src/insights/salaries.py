@@ -1,4 +1,4 @@
-from typing import Union, List, Dict
+from typing import Dict, Union, List
 from src.insights.jobs import ProcessJobs
 
 
@@ -29,36 +29,7 @@ class ProcessSalaries(ProcessJobs):
 
         return min_salary if min_salary != float("inf") else 0
 
-    from typing import Dict, Union
-
-    def matches_salary_range(self, job: Dict, salary: Union[str, int]) -> bool:
-        # Verifica a presença e validade das chaves min_salary e max_salary no dicionário
-        for key in ["min_salary", "max_salary"]:
-            if key not in job or (
-                not str(job[key]).replace(".", "").replace("-", "").isdigit()
-            ):
-                raise ValueError(
-                    f"A chave {key} é obrigatória e deve ter um valor numérico."
-                )
-
-        # Converte os valores de min_salary, max_salary e salary para números
-        min_salary, max_salary, salary = map(
-            float,
-            (
-                job.get("min_salary", float("-inf")),
-                job.get("max_salary", float("inf")),
-                salary or 0,
-            ),
-        )
-
-        # Verifica se min_salary é maior que max_salary
-        if min_salary > max_salary:
-            raise ValueError(
-                "O valor de min_salary não pode ser maior que max_salary."
-            )
-
-        # Retorna True se o salário estiver dentro da faixa salarial, caso contrário, retorna False
-        return min_salary <= salary <= max_salary
+    
 
     def matches_salary_range(self, job: Dict, salary: Union[str, int]) -> bool:
         # Verifica a presença e validade das chaves min_salary e max_salary no dicionário
