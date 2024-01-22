@@ -30,7 +30,7 @@ class ProcessSalaries(ProcessJobs):
         return min_salary if min_salary != float("inf") else 0
 
     def matches_salary_range(self, job: Dict, salary: Union[str, int]) -> bool:
-        # Verifica a presença e validade das chaves min_salary e max_salary no dicionário
+
         for key in ["min_salary", "max_salary"]:
             if key not in job or (
                 not str(job[key]).replace(".", "").isdigit()
@@ -44,7 +44,6 @@ class ProcessSalaries(ProcessJobs):
             except (ValueError, TypeError):
                 raise ValueError("salary tipo float")
 
-            # Converte os valores de min_salary, max_salary e salary para números
             try:
                 min_salary, max_salary, salary = map(
                     float,
@@ -60,7 +59,6 @@ class ProcessSalaries(ProcessJobs):
         if min_salary > max_salary:
             raise ValueError("min_salary não maior que max_salary")
 
-        # Retorna True se o salário estiver dentro da faixa salarial, caso contrário, retorna False
         return min_salary <= salary <= max_salary
 
     def filter_by_salary_range(
