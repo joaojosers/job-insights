@@ -2,7 +2,6 @@
 
 ## Contexto
 - O projeto requer a implementação de análises a partir de um conjunto de dados sobre empregos.
-- Utilizar Django e Django Rest Framework
 
 ## Habilidades a serem trabalhadas
 - Utilizar o terminal interativo do Python.
